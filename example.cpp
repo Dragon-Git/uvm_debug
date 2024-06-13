@@ -6,7 +6,7 @@ extern "C" {
 
 namespace py = pybind11;
 
-void wait_unit();
+void wait_unit(int n);
 
 PYBIND11_MODULE(svuvm, m) {
     m.doc() = "svuvm api module";
