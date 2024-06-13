@@ -16,18 +16,18 @@
         obj = factory.create_object_by_name(seq_name, "", seq_name);
         if (obj == null)  begin
             factory.print(1);
-            `uvm_fatal(get_full_name(), $sformatf("can not create %0s seq", seq_name))
+            `uvm_fatal("uvm_sv_pkg", $sformatf("can not create %0s seq", seq_name))
         end
         if (!$cast(seq, obj))  begin
-            `uvm_fatal(get_full_name(), $sformatf("cast failed - %0s is not a uvm_sequence", seq_name))
+            `uvm_fatal("uvm_sv_pkg", $sformatf("cast failed - %0s is not a uvm_sequence", seq_name))
         end
         comp = top.find(sqr_name);
         if (comp == null)  begin
             top.print_topology();
-            `uvm_fatal(get_full_name(), $sformatf("can not find %0s seq", sqr_name))
+            `uvm_fatal("uvm_sv_pkg", $sformatf("can not find %0s seq", sqr_name))
         end
         if (!$cast(sqr, comp))  begin
-            `uvm_fatal(get_full_name(), $sformatf("cast failed - %0s is not a uvm_sequencer", sqr_name))
+            `uvm_fatal("uvm_sv_pkg", $sformatf("cast failed - %0s is not a uvm_sequencer", sqr_name))
         end
 
         seq.start(sqr);
