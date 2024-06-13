@@ -1,6 +1,6 @@
 module top ();
-    task wait_unit();
-        #1;
+    task wait_unit(int n);
+        #n;
         $display("inside sv task in %d", $time);
     endtask
     export "DPI-C" task wait_unit;
