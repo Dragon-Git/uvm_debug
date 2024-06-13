@@ -6,7 +6,12 @@ namespace py = pybind11;
 extern "C" void body() {
     py::scoped_interpreter guard{}; // start the interpreter and keep it alive
 
-    py::print("Hello, World!"); // use the Python API
+    py::module_ sys = py::module_::import("sys");
+    py::print(sys.attr("path"));
+    py::module_ run = py::module_::import("run");
+    py::object result = run.attr("add")(1, 2);
+    int n = result.cast<int>();
+    assert(n == 3);
 }
 
 int add(int i, int j) {
