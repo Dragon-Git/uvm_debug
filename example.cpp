@@ -17,8 +17,8 @@ PYBIND11_MODULE(svuvm, m) {
 void py_func(const char* py_seq) {
     py::scoped_interpreter guard{}; // start the interpreter and keep it alive
 
-    py::module_ py_seq = py::module_::import(py_seq);
-    py_seq.attr("main")();
+    py::module_ py_seq_mod = py::module_::import(py_seq);
+    py_seq_mod.attr("main")();
 }
 
 
