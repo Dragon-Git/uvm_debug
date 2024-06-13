@@ -1,3 +1,4 @@
-import example
+import svuvm
 
-print(example.add(1, 2))  # 输出: 3
+def main():
+    svuvm.wait_unit()
