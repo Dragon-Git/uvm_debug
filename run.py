@@ -1,4 +1,5 @@
 import svuvm
 
 def main():
-    svuvm.wait_unit()
+    for i in range(10):
+        svuvm.wait_unit(i)
