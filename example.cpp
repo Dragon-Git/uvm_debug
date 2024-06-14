@@ -19,10 +19,10 @@ PYBIND11_MODULE(svuvm, m) {
 void py_func(const char* mod_name, const char* func_name, const char* mod_paths) {
     py::scoped_interpreter guard{}; // start the interpreter and keep it alive
 
-    if(mod_paths != "") {
+    if(mod_paths && *mod_paths != "\0") {
         py::module_ sys = py::module_::import("sys");
-        py::object path = sys.attr("path")
-        path.attr("append")(mod_paths)
+        py::list path = sys.attr("path");
+        path.attr("append")(mod_paths);
         }
     py::module_ py_seq_mod = py::module_::import(mod_name);
     py_seq_mod.attr(func_name)();
