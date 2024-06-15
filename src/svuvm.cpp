@@ -1,3 +1,5 @@
+#include <dlfcn.h>
+#include <libgen.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/embed.h>
 #include "svdpi.h"
@@ -17,13 +19,20 @@ PYBIND11_MODULE(svuvm, m) {
 }
 
 void py_func(const char* mod_name, const char* func_name, const char* mod_paths) {
+    Dl_info dl_info;
+    char *dir_path;
     py::scoped_interpreter guard{}; // start the interpreter and keep it alive
 
-    if(mod_paths && *mod_paths != "\0") {
-        py::module_ sys = py::module_::import("sys");
-        py::list path = sys.attr("path");
+    py::module_ sys = py::module_::import("sys");
+    py::list path = sys.attr("path");
+    if (dladdr((void*)py_func, &dl_info)) {
+        dir_path = dirname(const_cast<char*>(dl_info.dli_fname));
+        path.attr("append")(dir_path);
+    }
+    if(strcmp(mod_paths, "") != 0) {
         path.attr("append")(mod_paths);
-        }
+    }
+    py::print(path);
     py::module_ py_seq_mod = py::module_::import(mod_name);
     py_seq_mod.attr(func_name)();
 }
