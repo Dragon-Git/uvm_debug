@@ -1,0 +1,105 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python package
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: ["*"]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install verilator
+      run: |
+        sudo apt-get install -y --no-install-recommends help2man make g++ perl python3 autoconf flex bison libfl2 libfl-dev zlib1g zlib1g-dev
+        git clone https://github.com/verilator/verilator.git
+        cd verilator
+        git reset --hard v5.026
+        autoconf
+        ./configure
+        make -j $(nproc)
+        sudo make install
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install .
+
+    - name: Lint with ruff
+      uses: chartboost/ruff-action@v1
+
+  # build:
+  #   needs:
+  #     - test
+  #   name: Build distributions
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         submodules: true
+
+  #     - uses: actions/setup-python@v5
+  #       name: Install Python
+  #       with:
+  #         python-version: "3.12"
+
+  #     - name: Install dependencies
+  #       run: |
+  #         python -m pip install -U build
+
+  #     - name: Build
+  #       run: python -m build
+
+  #     - name: Upload artifact
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         path: |
+  #           dist/*.tar.gz
+  #           dist/*.whl
+
+  #     - name: Release
+  #       uses: softprops/action-gh-release@v2
+  #       if: startsWith(github.ref, 'refs/tags/')
+  #       with:
+  #         files: |
+  #           dist/*.tar.gz
+  #           dist/*.whl
+  #         generate_release_notes: true
+
+  # deploy:
+  #   needs:
+  #     - build
+
+  #   runs-on: ubuntu-latest
+  #   environment: release
+  #   permissions:
+  #     id-token: write
+
+  #   # Only publish when a tag is pused.
+  #   if: startsWith(github.ref, 'refs/tags/')
+  #   steps:
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         name: artifact
+  #         path: dist
+
+  #     - uses: pypa/gh-action-pypi-publish@release/v1

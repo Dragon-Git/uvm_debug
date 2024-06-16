@@ -9,9 +9,21 @@ dependencies = []
 readme = "README.md"
 requires-python = ">= 3.8"
 
+[project.optional-dependencies]
+lint = ['ruff']
+doc = ['sphinx']
+test = ['pytest', 'coverage', 'pytest-cov']
+dev = ['svuvm[lint, doc, test]']
+
 [build-system]
 requires = [
     "setuptools>=42",
     "pybind11>=2.10.0",
 ]
 build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint.pydocstyle]
+    convention = "google"
