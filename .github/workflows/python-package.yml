@@ -33,6 +33,8 @@ jobs:
         ./configure
         make -j $(nproc)
         sudo make install
+        cd ..
+        rm -rf verilator
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
