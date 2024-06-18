@@ -46,8 +46,23 @@
     endtask:start_seq
     `endif
 
+    task write_reg(input int address, input int data);
+begin
+        // Placeholder for actual implementation
+        $display("Writing to register %d: %d", address, data);
+    endtask:write_reg
+
+    task read_reg(input int address, output int data);
+begin
+        // Placeholder for actual implementation
+        data = 0xDEADBEEF; // Example dummy read value
+        $display("Reading from register %d: %d", address, data);
+    endtask:read_reg
+
     export "DPI-C" task wait_unit;
     export "DPI-C" task start_seq;
+    export "DPI-C" task write_reg;
+    export "DPI-C" task read_reg;
 
     import "DPI-C" context task py_func(input string mod_name, string func_name = "main", string mod_paths = "");
     task call_py_func(input string mod_name, string func_name = "main", string mod_paths = "");
