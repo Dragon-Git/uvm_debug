@@ -52,7 +52,6 @@
     endtask:write_reg
 
     task read_reg(input int address, output int data);
-begin
         // Placeholder for actual implementation
         data = 32'hDEADBEEF; // Example dummy read value
         $display("Reading from register %d: %d", address, data);
