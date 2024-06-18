@@ -47,7 +47,6 @@
     `endif
 
     task write_reg(input int address, input int data);
-begin
         // Placeholder for actual implementation
         $display("Writing to register %d: %d", address, data);
     endtask:write_reg
@@ -55,7 +54,7 @@ begin
     task read_reg(input int address, output int data);
 begin
         // Placeholder for actual implementation
-        data = 0xDEADBEEF; // Example dummy read value
+        data = 32'hDEADBEEF; // Example dummy read value
         $display("Reading from register %d: %d", address, data);
     endtask:read_reg
 
