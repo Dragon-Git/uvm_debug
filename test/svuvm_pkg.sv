@@ -48,13 +48,13 @@
 
     task write_reg(input int address, input int data);
         // Placeholder for actual implementation
-        $display("Writing to register %d: %d", address, data);
+        $display("Writing to register %h: %h", address, data);
     endtask:write_reg
 
     task read_reg(input int address, output int data);
         // Placeholder for actual implementation
         data = 32'hDEADBEEF; // Example dummy read value
-        $display("Reading from register %d: %d", address, data);
+        $display("Reading from register %h: %h", address, data);
     endtask:read_reg
 
     export "DPI-C" task wait_unit;

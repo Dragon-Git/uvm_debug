@@ -13,13 +13,19 @@ void start_seq(const char* seq_name, const char* sqr_name);
 void write_reg(int address, int data);
 void read_reg(int address, int *data);
 
+int read_reg_wrap(int address) {
+    int data;
+    read_reg(address, &data);
+    return data;
+}
+
 PYBIND11_MODULE(svuvm, m) {
     m.doc() = "svuvm api module";
 
     m.def("wait_unit", &wait_unit, "wait unit time");
     m.def("start_seq", &start_seq, "start seq on sqr");
     m.def("write_reg", &write_reg, "write register");
-    m.def("read_reg", &read_reg, "read data");
+    m.def("read_reg", &read_reg_wrap, "read data");
 
 }
 
