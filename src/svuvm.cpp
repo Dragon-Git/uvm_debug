@@ -40,7 +40,6 @@ void py_func(const char* mod_name, const char* func_name, const char* mod_paths)
     FILE* maps = fopen("/proc/self/maps", "r");
     if (!maps) {
         perror("Failed to open /proc/self/maps");
-        return NULL;
     }
 
     char self_addr_str[20];
