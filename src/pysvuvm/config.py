@@ -1,9 +1,7 @@
-import sys
 import sysconfig
 from pathlib import Path
 
 getvar = sysconfig.get_config_var
-pyver = getvar('VERSION')
 so_name = "svuvm" + getvar("EXT_SUFFIX")
 
 so_file = Path(__file__).parent.parent / so_name
