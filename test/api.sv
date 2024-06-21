@@ -5,7 +5,7 @@ module top ();
     `endif
     import svuvm_pkg::*;
     initial begin
-        call_py_func("run");
+        call_py_func("run", "main", dirname(`__FILE__));
         $finish;
     end
 endmodule

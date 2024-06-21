@@ -1,5 +1,5 @@
 [project]
-name = "svuvm"
+name = "pysvuvm"
 version = "0.1.0"
 description = "Add your description here"
 authors = [

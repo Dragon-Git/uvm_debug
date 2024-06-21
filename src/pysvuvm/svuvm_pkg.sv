@@ -62,6 +62,7 @@
     export "DPI-C" task write_reg;
     export "DPI-C" task read_reg;
 
+    import "DPI-C" pure function string dirname(string file_path);
     import "DPI-C" context task py_func(input string mod_name, string func_name = "main", string mod_paths = "");
     task call_py_func(input string mod_name, string func_name = "main", string mod_paths = "");
         py_func(mod_name, func_name, mod_paths);

@@ -1,0 +1,3 @@
+recursive-include src/pysvuvm *.sv
+recursive-exclude src/pysvuvm *.cpp
+recursive-exclude test *
