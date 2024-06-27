@@ -18,8 +18,8 @@
         uvm_factory factory = uvm_factory::get();
         uvm_object obj;
         uvm_component comp;
-        uvm_sequence seq;
-        uvm_sequencer sqr;
+        uvm_sequence_base seq;
+        uvm_sequencer_base sqr;
  
         obj = factory.create_object_by_name(seq_name, "", seq_name);
         if (obj == null)  begin
