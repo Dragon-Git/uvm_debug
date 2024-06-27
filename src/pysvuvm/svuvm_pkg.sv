@@ -17,7 +17,7 @@
         uvm_root top = uvm_root::get();
         uvm_factory factory = uvm_factory::get();
         uvm_object obj;
-        uvm_co7mponent comp;
+        uvm_component comp;
         uvm_sequence seq;
         uvm_sequencer sqr;
  
