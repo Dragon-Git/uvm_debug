@@ -1,8 +1,5 @@
 #include <dlfcn.h>
 #include <libgen.h>
-#ifdef __APPLE__
-#include <mach-o/dyld.h>
-#endif
 #include <pybind11/pybind11.h>
 #include <pybind11/embed.h>
 #include "svdpi.h"
@@ -61,19 +58,10 @@ void py_func(const char* mod_name, const char* func_name, const char* mod_paths)
         }
     }    
 #elif defined(__APPLE__)
-    uint32_t image_count = _dyld_image_count();
     Dl_info dl_info;
-
-    for(uint32_t i=0; i<image_count; i++) {
-        const char* image_name = _dyld_get_image_name(i);
-        const struct mach_header* header = _dyld_get_image_header(i);
-
-        if (dladdr(header, &dl_info) && (dl_info.dli_fbase == header)) {
-            if (((intptr_t)py_func >= (intptr_t)header) && ((intptr_t)header + _dyld_get_image_vmaddr_slide(i)) > (intptr_t)py_func) {
-                dir_path = dirname(const_cast<char*>(image_name));
-                path.attr("append")(dir_path);
-            }
-        }
+    if (dladdr((void*)py_func, &dl_info)) {
+        dir_path = dirname(const_cast<char*>(dl_info.dli_fname));
+        path.attr("append")(dir_path);
     }
 #else
 #error Platform not supported.
