@@ -5,7 +5,7 @@ verilator -j $(nproc) --vpi --binary +define+UVM_NO_DPI -top top -Mdir build \
 $(python -m pysvuvm.config) -LDFLAGS "$(python3-config --ldflags --embed)" \
 $PWD/test/api.sv \
 -Wno-lint -Wno-style -Wno-SYMRSVDWORD -Wno-IGNOREDRETURN -Wno-CONSTRAINTIGN -Wno-ZERODLY \
- --debug --gdbbt
+
 # $PWD/uvm-verilator/src/dpi/uvm_dpi.cc \
 # -CFLAGS "-I$PWD/uvm-verilator/src/dpi -I$PWD/inc" \
 # -DUVM_CMDLINE_NO_DPI -DUVM_REGEX_NO_DPI -DUVM_HDL_NO_DPI \
