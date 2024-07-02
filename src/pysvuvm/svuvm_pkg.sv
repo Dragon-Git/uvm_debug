@@ -1,18 +1,15 @@
  package svuvm_pkg;
 
-    `ifndef NOUVM
     import uvm_pkg::*;
     `include "uvm_macros.svh"
-    `endif
 
     task wait_unit(int n);
-    `ifndef NOUVM
+    `ifndef VERILATOR
         #n;
     `endif
         $display("inside sv task in %d", $time);
     endtask:wait_unit
 
-    `ifndef NOUVM
     task start_seq(string seq_name, string sqr_name);
         uvm_root top = uvm_root::get();
         uvm_factory factory = uvm_factory::get();
@@ -38,13 +35,10 @@
             `uvm_fatal("svuvm_pkg", $sformatf("cast failed - %0s is not a uvm_sequencer", sqr_name))
         end
 
+    `ifndef VERILATOR
         seq.start(sqr);
-    endtask:start_seq
-    `else
-    task start_seq(string seq_name, string sqr_name);
-        $display("Not implemented in NOUVM defined");
-    endtask:start_seq
     `endif
+    endtask:start_seq
 
     task write_reg(input int address, input int data);
         // Placeholder for actual implementation
