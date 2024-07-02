@@ -8,6 +8,8 @@ extern "C" {
 
 namespace py = pybind11;
 
+#include "uvm_dpi.h"
+
 void wait_unit(int n);
 void start_seq(const char* seq_name, const char* sqr_name);
 void write_reg(int address, int data);
@@ -22,6 +24,7 @@ int read_reg_wrap(int address) {
 PYBIND11_MODULE(svuvm, m) {
     m.doc() = "svuvm api module";
 
+    m.def("uvm_report", &m_uvm_report_dpi, "uvm report by dpi");
     m.def("wait_unit", &wait_unit, "wait unit time");
     m.def("start_seq", &start_seq, "start seq on sqr");
     m.def("write_reg", &write_reg, "write register");
