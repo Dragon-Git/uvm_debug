@@ -42,7 +42,13 @@
 #include "vpi_user.h"
 #include "veriuser.h"
 #include "svdpi.h"
+#ifdef __linux__
 #include <malloc.h>
+#elif defined(__APPLE__)
+#include <sys/malloc.h>
+#else
+#error Platform not supported.
+#endif
 #include <string.h>
 #include <stdio.h>
 #include <regex.h>

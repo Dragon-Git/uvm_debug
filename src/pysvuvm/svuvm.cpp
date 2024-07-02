@@ -7,9 +7,19 @@
 extern "C" {
 
 namespace py = pybind11;
-
+#if defined(VCS) || defined(VCSMX) || defined(XCELIUM) || defined(NCSC)
 #include "uvm_dpi.h"
-
+#else
+void m_uvm_report_dpi(int severity,
+                      char* id,
+                      char* message,
+                      int verbosity,
+                      char* file,
+                      int linenum){
+                        return;
+                      };
+    
+#endif
 void wait_unit(int n);
 void start_seq(const char* seq_name, const char* sqr_name);
 void write_reg(int address, int data);
