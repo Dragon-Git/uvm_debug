@@ -30,10 +30,10 @@ void wrap_walk_level(int lvl, std::vector<std::string> args, int cmd) {
 
 
 void _print_factory (int all_types=1);
-void _set_factory_inst_override(const char* original_type_name, override_type_name, const char* full_inst_path);
+void _set_factory_inst_override(const char* original_type_name, const char* override_type_name, const char* full_inst_path);
 void _set_factory_type_override (const char* original_type_name, const char* override_type_name, bool replace=1);
 void _debug_factory_create (const char* requested_type,const char* context="");
-void _find_factory_override (const char* requested_type, const char* context, const char** override_type_name);
+void _find_factory_override (const char* requested_type, const char* context, const char* override_type_name);
 void _print_topology(const char* context="");
 
 #endif
