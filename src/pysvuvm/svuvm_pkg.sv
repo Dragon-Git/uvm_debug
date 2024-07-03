@@ -3,6 +3,54 @@
     import uvm_pkg::*;
     `include "uvm_macros.svh"
 
+//------------------------------------------------------------------------------
+// Group: Factory
+//
+// Provides ability to set type and instance overrides for simple classes
+// (non-parameterized).
+//------------------------------------------------------------------------------
+
+function automatic void _print_factory (int all_types=1);
+  uvm_factory factory = uvm_factory::get();
+  factory.print(all_types);
+endfunction
+
+
+function automatic void _set_factory_inst_override (string requested_type,
+                                                        string override_type,
+                                                        string contxt);
+  uvm_factory factory = uvm_factory::get();
+  factory.set_inst_override_by_name(requested_type,override_type,contxt);
+endfunction
+
+
+function automatic void _set_factory_type_override (string requested_type,
+                                                        string override_type,
+                                                        bit replace=1);
+  uvm_factory factory = uvm_factory::get();
+  factory.set_type_override_by_name(requested_type,override_type,replace);
+endfunction
+
+
+function automatic void _debug_factory_create (string requested_type,
+                                                   string contxt="");
+  uvm_factory factory = uvm_factory::get();
+  factory.debug_create_by_name(requested_type,contxt,"");
+endfunction
+
+
+function automatic void _find_factory_override (string requested_type,
+                                                    string contxt,
+                                                    output string override_type);
+  uvm_object_wrapper wrapper;
+  uvm_factory factory = uvm_factory::get();
+  wrapper = factory.find_override_by_name(requested_type, contxt);
+  if (wrapper == null)
+    override_type = requested_type;
+  else
+    override_type = wrapper.get_type_name();
+endfunction
+
     task wait_unit(int n);
     `ifndef VERILATOR
         #n;
