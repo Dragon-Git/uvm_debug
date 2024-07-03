@@ -21,8 +21,11 @@ int read_reg_wrap(int address) {
     return data;
 }
 
+PYBIND11_MODULE(svuvm, m) {
+    m.doc() = "svuvm api module";
+
 #if defined(VCS) || defined(VCSMX) || defined(XCELIUM) || defined(NCSC)
-PYBIND11_MODULE(uvmdpi, m) {
+
     m.attr("UVM_INFO") = M_UVM_INFO;
     m.attr("UVM_WARNING") = M_UVM_WARNING;
     m.attr("UVM_ERROR") = M_UVM_ERROR;
@@ -87,11 +90,7 @@ PYBIND11_MODULE(uvmdpi, m) {
 
     m.def("uvm_dpi_regfree", &uvm_dpi_regfree, "Free a compiled regular expression.",
           py::arg("re"));
-}
 #endif
-
-PYBIND11_MODULE(svuvm, m) {
-    m.doc() = "svuvm api module";
 
     m.def("wait_unit", &wait_unit, "wait unit time");
     m.def("start_seq", &start_seq, "start seq on sqr");
