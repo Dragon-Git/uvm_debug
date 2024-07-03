@@ -133,6 +133,14 @@ endfunction
         $display("Reading from register %h: %h", address, data);
     endtask:read_reg
 
+    // export
+    export "DPI-C" function _print_factory;
+    export "DPI-C" function _set_factory_inst_override;
+    export "DPI-C" function _set_factory_type_override;
+    export "DPI-C" function _debug_factory_create;
+    export "DPI-C" function _find_factory_override;
+    export "DPI-C" function _print_topology;
+
     export "DPI-C" task wait_unit;
     export "DPI-C" task start_seq;
     export "DPI-C" task write_reg;
