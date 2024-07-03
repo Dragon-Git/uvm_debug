@@ -118,25 +118,25 @@ PYBIND11_MODULE(svuvm, m) {
     m.def("uvm_dpi_regfree", &uvm_dpi_regfree, "Free a compiled regular expression.",
           py::arg("re"));
 
-    m.def("_print_factory", &_print_factory, "Prints factory information.", py::arg("all_types")=1);
+    m.def("print_factory", &_print_factory, "Prints factory information.", py::arg("all_types")=1);
 
-    m.def("_set_factory_inst_override", &_set_factory_inst_override,
+    m.def("set_factory_inst_override", &_set_factory_inst_override,
           "Sets an instance override in the factory.", 
           py::arg("original_type_name"), py::arg("override_type_name"), py::arg("full_inst_path"));
 
-    m.def("_set_factory_type_override", &_set_factory_type_override,
+    m.def("set_factory_type_override", &_set_factory_type_override,
           "Sets a type override in the factory.", 
           py::arg("original_type_name"), py::arg("override_type_name"), py::arg("replace")=true);
 
-    m.def("_debug_factory_create", &_debug_factory_create,
+    m.def("debug_factory_create", &_debug_factory_create,
           "Debugs the creation of a factory object.", 
           py::arg("requested_type"), py::arg("context")="");
 
-    m.def("_find_factory_override", &_find_factory_override,
+    m.def("find_factory_override", &_find_factory_override,
           "Finds an override for a given factory type.", 
           py::arg("requested_type"), py::arg("context"), py::arg("override_type_name"));
 
-    m.def("_print_topology", &_print_topology,
+    m.def("print_topology", &_print_topology,
           "Prints the topology.", 
           py::arg("context")="");
 
