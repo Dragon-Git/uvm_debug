@@ -89,7 +89,7 @@ PYBIND11_MODULE(svuvm, m) {
           py::arg("lvl"), py::arg("entry"), py::arg("cmd"));
 
     m.def("walk_level", &wrap_walk_level, "Walk through a hierarchy at a given level.",
-          py::arg("lvl"), py::arg("argc"), py::arg("argv"), py::arg("cmd"));
+          py::arg("lvl"), py::arg("argv"), py::arg("cmd"));
 
     m.def("uvm_dpi_get_next_arg_c", &uvm_dpi_get_next_arg_c, "Get the next argument from the command line.",
           py::arg("init"));
