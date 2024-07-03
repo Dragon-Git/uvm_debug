@@ -1,4 +1,4 @@
- package svuvm_pkg;
+ package python_bridge_pkg;
 
     import uvm_pkg::*;
     `include "uvm_macros.svh"
@@ -103,18 +103,18 @@ endfunction
         obj = factory.create_object_by_name(seq_name, "", seq_name);
         if (obj == null)  begin
             factory.print(1);
-            `uvm_fatal("svuvm_pkg", $sformatf("can not create %0s seq", seq_name))
+            `uvm_fatal("python_bridge_pkg", $sformatf("can not create %0s seq", seq_name))
         end
         if (!$cast(seq, obj))  begin
-            `uvm_fatal("svuvm_pkg", $sformatf("cast failed - %0s is not a uvm_sequence", seq_name))
+            `uvm_fatal("python_bridge_pkg", $sformatf("cast failed - %0s is not a uvm_sequence", seq_name))
         end
         comp = top.find(sqr_name);
         if (comp == null)  begin
             top.print_topology();
-            `uvm_fatal("svuvm_pkg", $sformatf("can not find %0s seq", sqr_name))
+            `uvm_fatal("python_bridge_pkg", $sformatf("can not find %0s seq", sqr_name))
         end
         if (!$cast(sqr, comp))  begin
-            `uvm_fatal("svuvm_pkg", $sformatf("cast failed - %0s is not a uvm_sequencer", sqr_name))
+            `uvm_fatal("python_bridge_pkg", $sformatf("cast failed - %0s is not a uvm_sequencer", sqr_name))
         end
 
     `ifndef VERILATOR
