@@ -8,7 +8,25 @@ extern "C" {
 
 namespace py = pybind11;
 #if defined(VCS) || defined(VCSMX) || defined(XCELIUM) || defined(NCSC)
-#include "uvm_dpi.h"    
+#include "uvm_dpi.h"
+
+#include <vector>
+#include <string>
+
+
+// 使用pybind11创建的包装器函数
+void wrap_walk_level(int lvl, std::vector<std::string> args, int cmd) {
+    // Convert Python string list to C-style char**
+    std::vector<char*> c_args;
+    for (const auto& arg : args) {
+        c_args.push_back(const_cast<char*>(arg.c_str()));
+    }
+    char** argv = c_args.data();
+    int argc = static_cast<int>(args.size());
+
+    // Call the original function
+    walk_level(lvl, argc, argv, cmd);
+}
 #endif
 void wait_unit(int n);
 void start_seq(const char* seq_name, const char* sqr_name);
@@ -70,7 +88,7 @@ PYBIND11_MODULE(svuvm, m) {
     m.def("push_data", &push_data, "Push data to a specified level.",
           py::arg("lvl"), py::arg("entry"), py::arg("cmd"));
 
-    m.def("walk_level", &walk_level, "Walk through a hierarchy at a given level.",
+    m.def("walk_level", &wrap_walk_level, "Walk through a hierarchy at a given level.",
           py::arg("lvl"), py::arg("argc"), py::arg("argv"), py::arg("cmd"));
 
     m.def("uvm_dpi_get_next_arg_c", &uvm_dpi_get_next_arg_c, "Get the next argument from the command line.",
