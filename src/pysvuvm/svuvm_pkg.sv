@@ -61,10 +61,10 @@ endfunction
 // TOPOLOGY
 // --------
 
-function automatic void UVMC_print_topology(string contxt, int depth);
+function automatic void _print_topology(string contxt);
   uvm_root top = uvm_root::get();
   uvm_component comps[$];
-  int depth_save;
+  uvm_printer uvm_default_printer = uvm_printer::get_default();
   if (contxt == "")
     comps.push_back(top);
   else begin
@@ -73,8 +73,7 @@ function automatic void UVMC_print_topology(string contxt, int depth);
                {"No components found at context ", contxt})
     return;
   end
-  depth_save = uvm_default_printer.knobs.depth;
-  uvm_default_printer.knobs.depth = depth;
+
   foreach (comps[i]) begin
     string name = comps[i].get_full_name();
     if (name == "")
