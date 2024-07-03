@@ -51,6 +51,41 @@ function automatic void _find_factory_override (string requested_type,
     override_type = wrapper.get_type_name();
 endfunction
 
+//------------------------------------------------------------------------------
+// Group: Topology
+//
+// Provides ability to wait for UVM phase transitions.
+//------------------------------------------------------------------------------
+
+
+// TOPOLOGY
+// --------
+
+function automatic void UVMC_print_topology(string contxt, int depth);
+  uvm_root top = uvm_root::get();
+  uvm_component comps[$];
+  int depth_save;
+  if (contxt == "")
+    comps.push_back(top);
+  else begin
+    top.find_all(contxt,comps);
+    `uvm_error("UVMC_PRINT_TOPOLOGY",
+               {"No components found at context ", contxt})
+    return;
+  end
+  depth_save = uvm_default_printer.knobs.depth;
+  uvm_default_printer.knobs.depth = depth;
+  foreach (comps[i]) begin
+    string name = comps[i].get_full_name();
+    if (name == "")
+      name = "uvm_top";
+    `uvm_info("TRACE/UVMC_CMD/PRINT_TOPOLOGY",
+              {"Topology for component ",name,":"},UVM_NONE)
+    comps[i].print(uvm_default_printer);
+    $display();
+  end
+endfunction
+
     task wait_unit(int n);
     `ifndef VERILATOR
         #n;
