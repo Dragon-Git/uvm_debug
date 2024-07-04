@@ -36,6 +36,22 @@ void _debug_factory_create (const char* requested_type,const char* context="");
 void _find_factory_override (const char* requested_type, const char* context, const char* override_type_name);
 void _print_topology(const char* context="");
 
+void wait_on(const char* ev_name, int delta);
+void wait_off(const char* ev_name, int delta);
+void wait_trigger(const char* ev_name);
+void wait_ptrigger(const char* ev_name);
+// void wait_trigger_data(uvm_object *data, const char* ev_name);
+// void wait_ptrigger_data(uvm_object *data, const char* ev_name);
+uint64_t get_trigger_time(const char* ev_name);
+int is_on(const char* ev_name);
+int is_off(const char* ev_name);
+void reset(const char* ev_name, int wakeup);
+void cancel(const char* ev_name);
+int get_num_waiters(const char* ev_name);
+void trigger(const char* ev_name);
+//uvm_object *get_trigger_data();
+//uvm_object *get_default_data();
+//void set_default_data(uvm_object *data);
 #endif
 void wait_unit(int n);
 void start_seq(const char* seq_name, const char* sqr_name);
@@ -139,7 +155,18 @@ PYBIND11_MODULE(svuvm, m) {
     m.def("print_topology", &_print_topology,
           "Prints the topology.", 
           py::arg("context")="");
-
+    // uvm event
+    m.def("wait_on", &wait_on, "Wait until the signal is on", py::arg("ev_name"), py::arg("delta") = 0);
+    m.def("wait_off", &wait_off, "Wait until the signal is off", py::arg("ev_name"), py::arg("delta") = 0);
+    m.def("wait_trigger", &wait_trigger, "Wait for the trigger event", py::arg("ev_name"));
+    m.def("wait_ptrigger", &wait_ptrigger, "Wait for the positive trigger event", py::arg("ev_name"));
+    m.def("get_trigger_time", &get_trigger_time, "Get the time of the last trigger event", py::arg("ev_name"));
+    m.def("is_on", &is_on, "Check if the signal is on", py::arg("ev_name"));
+    m.def("is_off", &is_off, "Check if the signal is off", py::arg("ev_name"));
+    m.def("reset", &reset, "Reset the signal state", py::arg("ev_name"), py::arg("wakeup") = 0);
+    m.def("cancel", &cancel, "Cancel the current wait operation", py::arg("ev_name"));
+    m.def("get_num_waiters", &get_num_waiters, "Get the number of waiters", py::arg("ev_name"));
+    m.def("trigger", &trigger, "Trigger the event", py::arg("ev_name"));
 #endif
 
     m.def("wait_unit", &wait_unit, "wait unit time");
