@@ -1,4 +1,4 @@
- package python_bridge_pkg;
+package python_bridge_pkg;
 
     import uvm_pkg::*;
     `include "uvm_macros.svh"
@@ -90,112 +90,112 @@ endfunction
 //------------
 
     // Wrapper for wait_on
-    virtual task wait_on(string ev_name, bit delta = 0);
+    task wait_on(string ev_name, bit delta = 0);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         ev.wait_on(delta);
     endtask
 
     // Wrapper for wait_off
-    virtual task wait_off(string ev_name, bit delta = 0);
+    task wait_off(string ev_name, bit delta = 0);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         ev.wait_off(delta);
     endtask
 
     // Wrapper for wait_trigger
-    virtual task wait_trigger(string ev_name);
+    task wait_trigger(string ev_name);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         ev.wait_trigger();
     endtask
 
     // Wrapper for wait_ptrigger
-    virtual task wait_ptrigger(string ev_name);
+    task wait_ptrigger(string ev_name);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         ev.wait_ptrigger();
     endtask
 
     // Wrapper for wait_trigger_data
-    virtual task wait_trigger_data(string ev_name, output uvm_object data);
+    task wait_trigger_data(string ev_name, output uvm_object data);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         ev.wait_trigger_data(data);
     endtask
 
     // Wrapper for wait_ptrigger_data
-    virtual task wait_ptrigger_data(string ev_name, output uvm_object data);
+    task wait_ptrigger_data(string ev_name, output uvm_object data);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         ev.wait_ptrigger_data(data);
     endtask
 
     // Wrapper for get_trigger_time
-    virtual function time get_trigger_time(string ev_name);
+    function time get_trigger_time(string ev_name);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         return ev.get_trigger_time();
     endfunction
 
     // Wrapper for is_on
-    virtual function bit is_on(string ev_name);
+    function bit is_on(string ev_name);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         return ev.is_on();
     endfunction
 
     // Wrapper for is_off
-    virtual function bit is_off(string ev_name);
+    function bit is_off(string ev_name);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         return ev.is_off();
     endfunction
 
     // Wrapper for reset
-    virtual function void reset(string ev_name, bit wakeup = 0);
+    function void reset(string ev_name, bit wakeup = 0);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         ev.reset(wakeup);
     endfunction
 
     // Wrapper for cancel
-    virtual function void cancel(string ev_name);
+    function void cancel(string ev_name);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         ev.cancel();
     endfunction
 
     // Wrapper for get_num_waiters
-    virtual function int get_num_waiters(string ev_name);
+    function int get_num_waiters(string ev_name);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         return ev.get_num_waiters();
     endfunction
 
     // Wrapper for trigger
-    virtual function void trigger(string ev_name, uvm_object data=null);
+    function void trigger(string ev_name, uvm_object data=null);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         ev.trigger(data);
     endfunction
 
     // Wrapper for get_trigger_data
-    virtual function uvm_object get_trigger_data(string ev_name);
+    function uvm_object get_trigger_data(string ev_name);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         return ev.get_trigger_data();
     endfunction
 
     // Wrapper for get_default_data
-    virtual function uvm_object get_default_data(string ev_name);
+    function uvm_object get_default_data(string ev_name);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         return ev.get_default_data();
     endfunction
 
     // Wrapper for set_default_data
-    virtual function void set_default_data(string ev_name, uvm_object data);
+    function void set_default_data(string ev_name, uvm_object data);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         ev.set_default_data(data);
