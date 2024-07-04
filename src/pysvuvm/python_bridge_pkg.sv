@@ -132,7 +132,7 @@ endfunction
     endtask
 
     // Wrapper for get_trigger_time
-    function time get_trigger_time(string ev_name);
+    function longint get_trigger_time(string ev_name);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         return ev.get_trigger_time();
@@ -174,7 +174,7 @@ endfunction
     endfunction
 
     // Wrapper for trigger
-    function void trigger(string ev_name, uvm_object data=null);
+    function void trigger(string ev_name);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
         ev.trigger();
