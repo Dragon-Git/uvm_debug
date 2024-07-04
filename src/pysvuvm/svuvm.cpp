@@ -183,6 +183,9 @@ void py_func(const char* mod_name, const char* func_name, const char* mod_paths)
     py::module_ sys = py::module_::import("sys");
     py::list path = sys.attr("path");
 
+    py::module_ sysconfig = py::module_::import("sysconfig");
+    std::string ext_suffix = sysconfig.attr("get_config_var")("EXT_SUFFIX").cast<std::string>();
+
 #ifdef __linux__
     FILE* maps = fopen("/proc/self/maps", "r");
     if (!maps) {
@@ -195,8 +198,8 @@ void py_func(const char* mod_name, const char* func_name, const char* mod_paths)
 
     char line[256];
     while (fgets(line, sizeof(line), maps)) {
-        if (strstr(line, self_addr_str)) {
-            char* sopath = strchr(line, ' ');
+        if (strstr(line, ext_suffix.c_str())) {
+            char* sopath = strchr(line, '/');
             if (sopath) {
                 sopath = strtok(sopath, "\n");
                 fclose(maps);
