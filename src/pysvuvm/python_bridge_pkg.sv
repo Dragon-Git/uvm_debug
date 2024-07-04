@@ -85,9 +85,9 @@ function automatic void _print_topology(string contxt);
   end
 endfunction
 
-//------------
-// uvm event
-//------------
+    //------------
+    // uvm event
+    //------------
 
     // Wrapper for wait_on
     task wait_on(string ev_name, bit delta = 0);
@@ -177,9 +177,9 @@ endfunction
     function void trigger(string ev_name, uvm_object data=null);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
         uvm_event ev = event_pool.get(ev_name);
-        ev.trigger(data);
+        ev.trigger();
     endfunction
-
+/*
     // Wrapper for get_trigger_data
     function uvm_object get_trigger_data(string ev_name);
         uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
@@ -200,7 +200,7 @@ endfunction
         uvm_event ev = event_pool.get(ev_name);
         ev.set_default_data(data);
     endfunction
-
+*/
 
 // custom task
     task wait_unit(int n);
@@ -259,24 +259,24 @@ endfunction
     export "DPI-C" function _find_factory_override;
     export "DPI-C" function _print_topology;
 
-// uvm_event
-export "DPI-C" task wait_on;
-export "DPI-C" task wait_off;
-export "DPI-C" task wait_trigger;
-export "DPI-C" task wait_ptrigger;
-export "DPI-C" task wait_trigger_data;
-export "DPI-C" task wait_ptrigger_data;
+    // uvm_event
+    export "DPI-C" task wait_on;
+    export "DPI-C" task wait_off;
+    export "DPI-C" task wait_trigger;
+    export "DPI-C" task wait_ptrigger;
+    //export "DPI-C" task wait_trigger_data;
+    //export "DPI-C" task wait_ptrigger_data;
 
-export "DPI-C" function get_trigger_time;
-export "DPI-C" function is_on;
-export "DPI-C" function is_off;
-export "DPI-C" function reset;
-export "DPI-C" function cancel;
-export "DPI-C" function get_num_waiters;
-export "DPI-C" function trigger;
-export "DPI-C" function get_trigger_data;
-export "DPI-C" function get_default_data;
-export "DPI-C" function set_default_data;
+    export "DPI-C" function get_trigger_time;
+    export "DPI-C" function is_on;
+    export "DPI-C" function is_off;
+    export "DPI-C" function reset;
+    export "DPI-C" function cancel;
+    export "DPI-C" function get_num_waiters;
+    export "DPI-C" function trigger;
+    //export "DPI-C" function get_trigger_data;
+    //export "DPI-C" function get_default_data;
+    //export "DPI-C" function set_default_data;
 
     export "DPI-C" task wait_unit;
     export "DPI-C" task start_seq;
