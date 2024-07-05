@@ -194,6 +194,10 @@ endfunction
         $display("inside sv task in %d", $time);
     endtask:wait_unit
 
+    task stop();
+        $stop;
+    endtask:stop
+
     task start_seq(string seq_name, string sqr_name);
         uvm_root top = uvm_root::get();
         uvm_factory factory = uvm_factory::get();
@@ -263,6 +267,7 @@ endfunction
     //export "DPI-C" function set_default_data;
 
     export "DPI-C" task wait_unit;
+    export "DPI-C" task stop;
     export "DPI-C" task start_seq;
     export "DPI-C" task write_reg;
     export "DPI-C" task read_reg;
