@@ -54,6 +54,7 @@ void trigger(const char* ev_name);
 //void set_default_data(uvm_object *data);
 #endif
 void wait_unit(int n);
+void stop();
 void start_seq(const char* seq_name, const char* sqr_name);
 void write_reg(int address, int data);
 void read_reg(int address, int *data);
@@ -170,6 +171,7 @@ PYBIND11_MODULE(svuvm, m) {
 #endif
 
     m.def("wait_unit", &wait_unit, "wait unit time");
+    m.def("stop", &stop, "suspend the simulation");
     m.def("start_seq", &start_seq, "start seq on sqr");
     m.def("write_reg", &write_reg, "write register");
     m.def("read_reg", &read_reg_wrap, "read data");
