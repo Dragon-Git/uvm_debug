@@ -10,31 +10,12 @@ namespace py = pybind11;
 #if defined(VCS) || defined(VCSMX) || defined(XCELIUM) || defined(NCSC)
 #include "uvm_dpi.h"
 
-#include <vector>
-#include <string>
-
-
-// 使用pybind11创建的包装器函数
-void wrap_walk_level(int lvl, std::vector<std::string> args, int cmd) {
-    // Convert Python string list to C-style char**
-    std::vector<char*> c_args;
-    for (const auto& arg : args) {
-        c_args.push_back(const_cast<char*>(arg.c_str()));
-    }
-    char** argv = c_args.data();
-    int argc = static_cast<int>(args.size());
-
-    // Call the original function
-    walk_level(lvl, argc, argv, cmd);
-}
-
-
-void _print_factory (int all_types=1);
-void _set_factory_inst_override(const char* original_type_name, const char* override_type_name, const char* full_inst_path);
-void _set_factory_type_override (const char* original_type_name, const char* override_type_name, bool replace=1);
-void _debug_factory_create (const char* requested_type,const char* context="");
-void _find_factory_override (const char* requested_type, const char* context, const char* override_type_name);
-void _print_topology(const char* context="");
+void print_factory (int all_types=1);
+void set_factory_inst_override(const char* original_type_name, const char* override_type_name, const char* full_inst_path);
+void set_factory_type_override (const char* original_type_name, const char* override_type_name, bool replace=1);
+void debug_factory_create (const char* requested_type,const char* context="");
+void find_factory_override (const char* requested_type, const char* context, const char* override_type_name);
+void print_topology(const char* context="");
 
 void wait_on(const char* ev_name, int delta);
 void wait_off(const char* ev_name, int delta);
@@ -52,14 +33,35 @@ void trigger(const char* ev_name);
 //uvm_object *get_trigger_data();
 //uvm_object *get_default_data();
 //void set_default_data(uvm_object *data);
+
+void set_config_int(const char*  contxt, const char*  inst_name, const char*  field_name, uint64_t value);
+uint64_t get_config_int(const char*  contxt, const char*  inst_name, const char*  field_name);
+void set_config_string(const char*  contxt, const char*  inst_name, const char*  field_name, const char* value);
+const char* get_config_string(const char*  contxt, const char*  inst_name, const char*  field_name);
+
+// 使用pybind11创建的包装器函数
+void wrap_walk_level(int lvl, std::vector<std::string> args, int cmd) {
+    // Convert Python string list to C-style char**
+    std::vector<char*> c_args;
+    for (const auto& arg : args) {
+        c_args.push_back(const_cast<char*>(arg.c_str()));
+    }
+    char** argv = c_args.data();
+    int argc = static_cast<int>(args.size());
+
+    // Call the original function
+    walk_level(lvl, argc, argv, cmd);
+}
+
 #endif
+
 void wait_unit(int n);
 void stop();
 void start_seq(const char* seq_name, const char* sqr_name);
 void write_reg(int address, int data);
 void read_reg(int address, int *data);
 
-int read_reg_wrap(int address) {
+int wrap_read_reg(int address) {
     int data;
     read_reg(address, &data);
     return data;
@@ -135,25 +137,25 @@ PYBIND11_MODULE(svuvm, m) {
     m.def("uvm_dpi_regfree", &uvm_dpi_regfree, "Free a compiled regular expression.",
           py::arg("re"));
 
-    m.def("print_factory", &_print_factory, "Prints factory information.", py::arg("all_types")=1);
+    m.def("print_factory", &print_factory, "Prints factory information.", py::arg("all_types")=1);
 
-    m.def("set_factory_inst_override", &_set_factory_inst_override,
+    m.def("set_factory_inst_override", &set_factory_inst_override,
           "Sets an instance override in the factory.", 
           py::arg("original_type_name"), py::arg("override_type_name"), py::arg("full_inst_path"));
 
-    m.def("set_factory_type_override", &_set_factory_type_override,
+    m.def("set_factory_type_override", &set_factory_type_override,
           "Sets a type override in the factory.", 
           py::arg("original_type_name"), py::arg("override_type_name"), py::arg("replace")=true);
 
-    m.def("debug_factory_create", &_debug_factory_create,
+    m.def("debug_factory_create", &debug_factory_create,
           "Debugs the creation of a factory object.", 
           py::arg("requested_type"), py::arg("context")="");
 
-    m.def("find_factory_override", &_find_factory_override,
+    m.def("find_factory_override", &find_factory_override,
           "Finds an override for a given factory type.", 
           py::arg("requested_type"), py::arg("context"), py::arg("override_type_name"));
 
-    m.def("print_topology", &_print_topology,
+    m.def("print_topology", &print_topology,
           "Prints the topology.", 
           py::arg("context")="");
     // uvm event
@@ -168,13 +170,19 @@ PYBIND11_MODULE(svuvm, m) {
     m.def("cancel", &cancel, "Cancel the current wait operation", py::arg("ev_name"));
     m.def("get_num_waiters", &get_num_waiters, "Get the number of waiters", py::arg("ev_name"));
     m.def("trigger", &trigger, "Trigger the event", py::arg("ev_name"));
+    // config db
+    m.def("set_config_int", &set_config_int, "Set integer configuration in the UVM environment");
+    m.def("get_config_int", &get_config_int, "Get integer configuration from the UVM environment");
+    m.def("set_config_string", &set_config_string, "Set string configuration in the UVM environment");
+    m.def("get_config_string", &get_config_string, "Get string configuration from the UVM environment");
+
 #endif
 
     m.def("wait_unit", &wait_unit, "wait unit time");
     m.def("stop", &stop, "suspend the simulation");
     m.def("start_seq", &start_seq, "start seq on sqr");
     m.def("write_reg", &write_reg, "write register");
-    m.def("read_reg", &read_reg_wrap, "read data");
+    m.def("read_reg", &wrap_read_reg, "read data");
 
 }
 
