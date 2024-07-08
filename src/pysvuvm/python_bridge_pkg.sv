@@ -56,7 +56,6 @@ package python_bridge_pkg;
     function automatic void print_topology(string contxt);
         uvm_root top = uvm_root::get();
         uvm_component comps[$];
-        uvm_printer uvm_default_printer = uvm_printer::get_default();
         if (contxt == "")
             comps.push_back(top);
         else begin
@@ -70,7 +69,7 @@ package python_bridge_pkg;
             if (name == "")
                 name = "uvm_top";
             `uvm_info("TRACE/UVMC_CMD/PRINT_TOPOLOGY", {"Topology for component ",name,":"},UVM_NONE)
-            comps[i].print(uvm_default_printer);
+            comps[i].print();
             $display();
         end
     endfunction
