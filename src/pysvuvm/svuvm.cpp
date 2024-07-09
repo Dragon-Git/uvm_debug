@@ -215,6 +215,7 @@ void py_func(const char* mod_name, const char* func_name, const char* mod_paths)
                 fclose(maps);
                 dir_path = dirname(sopath);
                 path.attr("append")(dir_path);
+                break;
             }
         }
     }    
