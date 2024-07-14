@@ -1,4 +1,4 @@
-from sysconfig import get_config_var as get_var
+from sysconfig import get_config_var as getvar
 from glob import glob
 from setuptools import setup
 from pybind11.setup_helpers import Pybind11Extension, build_ext
@@ -27,11 +27,10 @@ ext_modules = [
         "svuvm",
         sorted(glob("src/pysvuvm/*.cpp")),
         include_dirs=["inc"],
-        cxx_std=20,
         extra_link_args=[
             "-shared", "-fPIC",
-            f"-lpython{get_var('py_version_short')}",
-            f"-Wl,-rpath={get_var('prefix')}/lib",
+            f"-lpython{getvar('VERSION')}",
+            f"-Wl,-rpath={getvar('LIBDIR')}",
         ],
     ),
 ]

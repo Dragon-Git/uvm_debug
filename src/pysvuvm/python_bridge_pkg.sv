@@ -10,6 +10,7 @@ package python_bridge_pkg;
     // (non-parameterized).
     //------------------------------------------------------------------------------
 
+    `ifndef VERILATOR
     function automatic void print_factory (int all_types=1);
         uvm_factory factory = uvm_factory::get();
         factory.print(all_types);
@@ -198,6 +199,7 @@ package python_bridge_pkg;
         uvm_component comp = top.find(contxt);
         uvm_config_db #(string)::get(comp, inst_name, field_name, get_config_string);
     endfunction
+    `endif //VERILATOR
 
     // custom task
     task wait_unit(int n);
@@ -253,6 +255,7 @@ package python_bridge_pkg;
     endtask:read_reg
 
     // export
+    `ifndef VERILATOR
     export "DPI-C" function print_factory;
     export "DPI-C" function set_factory_inst_override;
     export "DPI-C" function set_factory_type_override;
@@ -283,6 +286,7 @@ package python_bridge_pkg;
     export "DPI-C" function get_config_int;
     export "DPI-C" function set_config_string;
     export "DPI-C" function get_config_string;
+    `endif //VERILATOR
 
     export "DPI-C" task wait_unit;
     export "DPI-C" task stop;
