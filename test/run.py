@@ -1,4 +1,4 @@
-import svuvm
+from svuvm import svuvm
 
 def main():
     data = 0xdeadbeef

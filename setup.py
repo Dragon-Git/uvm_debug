@@ -24,8 +24,8 @@ class custom_build_ext(build_ext):  # noqa: N801
 
 ext_modules = [
     CustomExtension(
-        "svuvm",
-        sorted(glob("src/pysvuvm/*.cpp")),
+        "svuvm.svuvm",
+        sorted(glob("src/svuvm/*.cpp")),
         include_dirs=["inc"],
         extra_link_args=[
             "-shared", "-fPIC",
