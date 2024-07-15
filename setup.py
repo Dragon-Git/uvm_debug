@@ -28,9 +28,8 @@ ext_modules = [
         sorted(glob("src/svuvm/*.cpp")),
         include_dirs=["inc"],
         extra_link_args=[
-            "-shared", "-fPIC",
+            "-fPIC",
             f"-lpython{getvar('VERSION')}",
-            f"-Wl,-rpath={getvar('LIBDIR')}",
         ],
     ),
 ]
