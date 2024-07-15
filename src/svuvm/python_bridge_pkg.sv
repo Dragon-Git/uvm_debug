@@ -176,25 +176,25 @@ package python_bridge_pkg;
     endfunction
     */
 
-    function void set_config_int(string contxt, string inst_name, string field_name, longint unsigned value);
+    function automatic void set_config_int(string contxt, string inst_name, string field_name, longint unsigned value);
         uvm_root top = uvm_root::get();
         uvm_component comp = top.find(contxt);
         uvm_config_db#(uvm_bitstream_t)::set(comp, inst_name, field_name, value);
     endfunction
 
-    function longint get_config_int(string contxt, string inst_name, string field_name);
+    function automatic longint get_config_int(string contxt, string inst_name, string field_name);
         uvm_root top = uvm_root::get();
         uvm_component comp = top.find(contxt);
         uvm_config_db#(uvm_bitstream_t)::get(comp, inst_name, field_name, get_config_int);
     endfunction
 
-    function void set_config_string (string contxt, string inst_name, string field_name, string value);
+    function automatic void set_config_string (string contxt, string inst_name, string field_name, string value);
         uvm_root top = uvm_root::get();
         uvm_component comp = top.find(contxt);
         uvm_config_db #(string)::set(comp, inst_name, field_name, value);
     endfunction
 
-    function string get_config_string (string contxt, string inst_name, string field_name);
+    function automatic string get_config_string (string contxt, string inst_name, string field_name);
         uvm_root top = uvm_root::get();
         uvm_component comp = top.find(contxt);
         uvm_config_db #(string)::get(comp, inst_name, field_name, get_config_string);
